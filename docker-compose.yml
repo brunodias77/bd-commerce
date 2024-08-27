@@ -1,12 +1,55 @@
-version: '3.8'
+version: '3.8'  # Especifica a versão do Docker Compose
 
 services:
   postgres:
-    container_name: postgres_bd
-    image: postgres
+    container_name: postgres_bd_commerce  # Nome do container para o serviço PostgreSQL
+    image: postgres  # Imagem do PostgreSQL que será usada
     ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=BD-COMMERCE
+      - 5432:5432  # Mapeia a porta 5432 do host para a porta 5432 do container
+    environment:  # Variáveis de ambiente para configuração do PostgreSQL
+      - POSTGRES_USER=admin  # Nome de usuário do PostgreSQL
+      - POSTGRES_PASSWORD=admin  # Senha do PostgreSQL
+      - POSTGRES_DB=BD-COMMERCE  # Nome do banco de dados que será criado
+    networks:
+      - kafka-net  # Conecta o serviço à rede personalizada chamada 'kafka-net'
+
+  zookeeper:
+    container_name: zookeeper  # Nome do container para o serviço Zookeeper
+    image: confluentinc/cp-zookeeper:latest  # Imagem do Zookeeper da Confluent Platform
+    ports:
+      - "2181:2181"  # Mapeia a porta 2181 do host para a porta 2181 do container
+    environment:  # Variáveis de ambiente para configuração do Zookeeper
+      ZOOKEEPER_CLIENT_PORT: 2181  # Porta de cliente do Zookeeper
+      ZOOKEEPER_TICK_TIME: 2000  # Tempo de tick (heartbeat) do Zookeeper
+    networks:
+      - kafka-net  # Conecta o serviço à rede personalizada 'kafka-net'
+
+  kafka:
+    container_name: kafka  # Nome do container para o serviço Kafka
+    image: confluentinc/cp-kafka:latest  # Imagem do Kafka da Confluent Platform
+    ports:
+      - "9092:9092"  # Mapeia a porta 9092 do host para a porta 9092 do container
+    environment:  # Variáveis de ambiente para configuração do Kafka
+      KAFKA_BROKER_ID: 1  # ID único para o broker Kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181  # Endereço do Zookeeper para conexão
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092  # Listener que será anunciado para os clientes
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1  # Fator de replicação do tópico de offsets do Kafka
+    depends_on:
+      - zookeeper  # Garante que o Zookeeper seja iniciado antes do Kafka
+    networks:
+      - kafka-net  # Conecta o serviço à rede personalizada 'kafka-net'
+
+  kafdrop:
+    container_name: kafdrop  # Nome do container para o serviço Kafdrop (interface web para Kafka)
+    image: obsidiandynamics/kafdrop:latest  # Imagem do Kafdrop
+    depends_on:
+      - kafka  # Garante que o Kafka seja iniciado antes do Kafdrop
+    ports:
+      - 9000:9000  # Mapeia a porta 9000 do host para a porta 9000 do container
+    environment:  # Variáveis de ambiente para configuração do Kafdrop
+      KAFKA_BROKERCONNECT: kafka:9092  # Endereço do broker Kafka que o Kafdrop irá se conectar
+    networks:
+      - kafka-net  # Conecta o serviço à rede personalizada 'kafka-net'
+
+networks:
+  kafka-net:  # Define uma rede Docker personalizada chamada 'kafka-net'

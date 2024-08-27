@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public record ProductDTO(
-        UUID id,
 
+public record ProductDTO(
         @NotBlank(message = "Campo obrigatório")
         @Size(min = 3, max = 80, message = "O nome deve ter entre 3 e 80 caracteres")
         String name,
@@ -29,7 +28,6 @@ public record ProductDTO(
 ) {
     public ProductDTO(Product entity) {
         this(
-                entity.getId(),
                 entity.getName(),
                 entity.getDescription(),
                 entity.getPrice(),

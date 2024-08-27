@@ -1,5 +1,6 @@
 package com.brunodias.bdc.application.useCases.products;
 
+import com.brunodias.bdc.application.exceptions.ResourceNotFoundException;
 import com.brunodias.bdc.domain.dtos.ProductDTO;
 import com.brunodias.bdc.domain.entities.Product;
 import com.brunodias.bdc.infrastructure.repositories.ProductRepository;
@@ -17,8 +18,7 @@ public class GetProductByIdUseCase {
 
     @Transactional(readOnly = true)
     public ProductDTO execute(UUID productId){
-        Optional<Product> result = _productRepository.findById(productId);
-        var product = result.get();
+        var product = _productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Recurso nao encontrado"));;
         return new ProductDTO(product);
     }
 }

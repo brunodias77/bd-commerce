@@ -12,14 +12,14 @@ import lombok.experimental.SuperBuilder;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "categories")
+@Entity
 @Table(name = "categories")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class Category extends BaseEntity{
+public class Category extends BaseEntity {
 
     private String name;
     @ManyToMany(mappedBy = "categories")

@@ -13,7 +13,7 @@ spring:
         format_sql: true # Formata o SQL gerado para facilitar a leitura
     database: postgresql # Especifica que o banco de dados utilizado é o PostgreSQL
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-
+    open-in-view: false # Desativa a estratégia Open Session in View
 application:
   security:
     jwt:

@@ -1,6 +1,5 @@
 package com.brunodias.bdc.domain.entities;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -37,8 +36,10 @@ public class BaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         BaseEntity that = (BaseEntity) o;
 

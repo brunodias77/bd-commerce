@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
 
-@Entity(name = "payments")
+@Entity
 @Table(name = "payments")
 @Getter
 @Setter

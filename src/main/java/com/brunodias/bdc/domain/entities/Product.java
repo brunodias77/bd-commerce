@@ -11,14 +11,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity(name = "products")
+@Entity
 @Table(name = "products")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class Product extends BaseEntity{
+public class Product extends BaseEntity {
 
     private String name;
 
@@ -30,10 +30,7 @@ public class Product extends BaseEntity{
     private String imgUrl;
 
     @ManyToMany
-    @JoinTable(name = "product_category",
-                joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
+    @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "id.product")

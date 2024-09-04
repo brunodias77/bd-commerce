@@ -2,10 +2,12 @@ package com.brunodias.bdc.domain.entities;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.util.Objects;
 
-@Entity(name = "order_item")
+@Entity
+@Table(name = "order_item")
 public class OrderItem {
 
     @EmbeddedId
@@ -59,8 +61,10 @@ public class OrderItem {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         OrderItem orderItem = (OrderItem) o;
 

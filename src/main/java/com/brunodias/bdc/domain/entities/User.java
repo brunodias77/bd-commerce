@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity(name = "users")
+@Entity
 @Table(name = "users")
 @NoArgsConstructor
 @Getter
@@ -55,7 +55,7 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
-    public String getFullName(){
+    public String getFullName() {
         return firstName + " " + lastName;
     }
 

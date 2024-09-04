@@ -18,8 +18,8 @@ public class GetAllProductsUseCase {
     private ProductRepository _productRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> execute(Pageable pageable){
-        Page <Product> result = _productRepository.findAll(pageable);
+    public Page<ProductDTO> execute(String name, Pageable pageable) {
+        Page<Product> result = _productRepository.searchByName(name, pageable);
         return result.map(product -> new ProductDTO(product));
     }
 }

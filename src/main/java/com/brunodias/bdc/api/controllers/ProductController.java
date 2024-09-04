@@ -35,35 +35,36 @@ public class ProductController {
 
     @Autowired
     private DeleteProductUseCase _deleteProductUseCase;
+
     @GetMapping("/{id}")
-    public ProductDTO getProductById(@PathVariable UUID id){
+    public ProductDTO getProductById(@PathVariable UUID id) {
         var result = _getProductByIdUseCase.execute(id);
         return result;
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> getAllProdcuts(Pageable pageable){
-        var result = _getAllProductsUseCase.execute(pageable);
+    public ResponseEntity<Page<ProductDTO>> getAllProdcuts(@RequestParam(name = "name", defaultValue = "") String name,
+            Pageable pageable) {
+        var result = _getAllProductsUseCase.execute(name, pageable);
         return ResponseEntity.ok().body(result);
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> insert(@RequestBody @Valid ProductDTO request){
+    public ResponseEntity<ProductDTO> insert(@RequestBody @Valid ProductDTO request) {
         var result = _addNewProductUseCase.execute(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable UUID id, @Valid @RequestBody ProductDTO productDTO){
+    public ResponseEntity<ProductDTO> update(@PathVariable UUID id, @Valid @RequestBody ProductDTO productDTO) {
         var result = _updateProductUseCase.execute(id, productDTO);
         return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id){
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         _deleteProductUseCase.execute(id);
         return ResponseEntity.noContent().build();
     }
 
 }
-

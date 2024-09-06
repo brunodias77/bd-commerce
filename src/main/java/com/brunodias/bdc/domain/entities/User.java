@@ -15,9 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -49,22 +47,36 @@ public class User extends BaseEntity implements UserDetails {
     @Size(min = 5, message = "A senha deve ter pelo menos 5 caracteres")
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
+    @ManyToMany
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == UserRole.ADMIN)
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else
-            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return roles;
+    }
+
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+
+    public boolean hasRole(String roleName) {
+        for (Role role : roles) {
+            if (role.getAuthority().equals(roleName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     @Override

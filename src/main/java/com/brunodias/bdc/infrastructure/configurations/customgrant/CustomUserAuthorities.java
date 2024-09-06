@@ -1,4 +1,4 @@
-package com.brunodias.bdc.infrastructure.configurations;
+package com.brunodias.bdc.infrastructure.configurations.customgrant;
 
 
 import java.util.Collection;

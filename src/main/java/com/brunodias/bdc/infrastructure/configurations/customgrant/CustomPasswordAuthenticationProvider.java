@@ -1,13 +1,11 @@
-package com.brunodias.bdc.infrastructure.configurations;
+package com.brunodias.bdc.infrastructure.configurations.customgrant;
 
-package br.com.cleilsonandrade.dscommerceapi.config.customgrant;
 
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.brunodias.bdc.infrastructure.configurations.customgrant.CustomPasswordAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

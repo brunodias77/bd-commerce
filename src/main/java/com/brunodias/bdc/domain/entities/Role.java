@@ -1,15 +1,17 @@
 package com.brunodias.bdc.domain.entities;
 
-import org.hibernate.validator.constraints.UUID;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import java.util.UUID;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roles")
-public class Role implements GrantedAuthority {
+public class Role  implements GrantedAuthority {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String authority;
 
@@ -23,8 +25,8 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAuthority'");
+        return authority;
+
     }
 
     public UUID getId() {

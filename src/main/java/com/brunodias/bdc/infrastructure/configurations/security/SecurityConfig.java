@@ -20,36 +20,40 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private SecurityFilter _securityFilter;
+        // @Autowired
+        // private SecurityFilter _securityFilter;
 
-    private static final String[] PERMIT_ALL_LIST = {
-            "/swagger-ui/**",
-            "/v3/api-docs/**",
-            "/swagger-resource/**",
-            "/actuator/**"
-    };
+        // private static final String[] PERMIT_ALL_LIST = {
+        // "/swagger-ui/**",
+        // "/v3/api-docs/**",
+        // "/swagger-resource/**",
+        // "/actuator/**"
+        // };
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .csrf(AbstractHttpConfigurer::disable) // Desabilita a proteção CSRF
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll() // Permite acesso não autenticado a todas as rotas
-                )
-                .addFilterBefore(_securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+        // @Bean
+        // public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
+        // throws Exception {
+        // return httpSecurity
+        // .csrf(AbstractHttpConfigurer::disable) // Desabilita a proteção CSRF
+        // .sessionManagement(session ->
+        // session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        // .authorizeHttpRequests(authorize -> authorize
+        // .anyRequest().permitAll() // Permite acesso não autenticado a todas as rotas
+        // )
+        // .addFilterBefore(_securityFilter, UsernamePasswordAuthenticationFilter.class)
+        // .build();
+        // }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+        // @Bean
+        // public AuthenticationManager
+        // authenticationManager(AuthenticationConfiguration
+        // authenticationConfiguration)
+        // throws Exception {
+        // return authenticationConfiguration.getAuthenticationManager();
+        // }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        // @Bean
+        // public PasswordEncoder passwordEncoder() {
+        // return new BCryptPasswordEncoder();
+        // }
 }

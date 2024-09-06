@@ -1,4 +1,23 @@
 
+-- Insercao de ROLES
+INSERT INTO roles (id, authority)
+VALUES ('b82bc6cc-a78b-40ae-86cb-9f3533c6609c', 'ROLE_ADMIN');
+
+-- Inserção USERS
+INSERT INTO users (id, created_date, updated_date, first_name, last_name, birth_date, phone, email, password)
+VALUES (
+    'dfe2672e-dc25-4c4f-b34d-3583dd4ef52f',
+    '2024-08-24 12:00:00',
+    '2024-08-24 12:00:00',
+    'Bruno',
+    'Dias',
+    '1995-01-26',
+    '14991781010',
+    'bruno@admin.com',
+    '$2a$10$wT7zWv5A1X3IzGcD27L82uR5YmCBN51LTsW8G5.HaODZmYaHTl8Xy',
+);
+INSERT INTO user_role (user_id, role_is) VALUES ('dfe2672e-dc25-4c4f-b34d-3583dd4ef52f', 'b82bc6cc-a78b-40ae-86cb-9f3533c6609c')
+
 
 -- Inserção CATEGORIES
 INSERT INTO categories (id, created_date, updated_date, name)
@@ -12,20 +31,7 @@ VALUES
   ('9d2d5e4b-d6b4-4cf6-8f39-8f9ae5d6f4e3', '2024-08-24 12:00:00', '2024-08-24 12:00:00', 'iPhones');
 
 
--- Inserção USERS
-INSERT INTO users (id, created_date, updated_date, first_name, last_name, birth_date, phone, email, password, role)
-VALUES (
-    'dfe2672e-dc25-4c4f-b34d-3583dd4ef52f',
-    '2024-08-24 12:00:00',
-    '2024-08-24 12:00:00',
-    'Bruno',
-    'Dias',
-    '1995-01-26',
-    '14991781010',
-    'bruno@admin.com',
-    '$2a$10$wT7zWv5A1X3IzGcD27L82uR5YmCBN51LTsW8G5.HaODZmYaHTl8Xy',
-    'ADMIN'
-);
+
 
 -- Insercao de Products
 INSERT INTO products (id, created_date, updated_date, name, price, description, img_url)
